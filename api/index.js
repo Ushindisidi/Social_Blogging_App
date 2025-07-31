@@ -1,5 +1,4 @@
 import express from "express";
-import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import path from "path";
@@ -17,8 +16,6 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-dotenv.config();
-
 app.use(express.json());
 
 // CORS options
@@ -30,12 +27,7 @@ app.use(cors(corsOptions));
 
 // Static files
 app.use(express.static(path.join(__dirname, "public")));
-
-// MongoDB connection
-// mongoose
-//   .connect(process.env.MONGO_URL, {})
-//   .then(() => console.log("✅ MongoDB Atlas connected successfully"))
-//   .catch((err) => console.error("❌ MongoDB connection error:", err));
+// Database connection
 connectDB();
 // Routes
 console.log("✅ Mounting auth route...");
