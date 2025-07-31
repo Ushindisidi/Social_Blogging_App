@@ -1,14 +1,14 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import cors from 'cors';
-import path from 'path';
-import { fileURLToPath } from 'url';
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
 
-import authRoute from './routes/auth.js';
-import userRoute from './routes/user.js';
-import postRoute from './routes/posts.js';
-import categoryRoute from './routes/categories.js';
+import authRoute from "./routes/authRoutes.js";
+import userRoute from "./routes/userRoutes.js";
+import postRoute from "./routes/postsRoutes.js";
+import categoryRoute from "./routes/categoriesRoutes.js";
 
 const app = express();
 
@@ -33,21 +33,15 @@ app.use(express.static(path.join(__dirname, "public")));
 // MongoDB connection
 mongoose
   .connect(process.env.MONGO_URL, {})
-  .then(() => console.log('✅ DB Connected'))
+  .then(() => console.log("✅ DB Connected"))
   .catch((err) => console.log(err));
 
 // Routes
 console.log("✅ Mounting auth route...");
-app.use('/api/auth', authRoute);
-app.use('/api/users', userRoute);
-app.use('/api/posts', postRoute);
-app.use('/api/categories', categoryRoute);
-
-// Root route
-app.get('/', (req, res) => {
-  console.log("✅ GET / route hit");
-  res.status(200).send("Hello from backend. Life is Great on this side. T for Tough");
-});
+app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
+app.use("/api/posts", postRoute);
+app.use("/api/categories", categoryRoute);
 
 // Start server
 const PORT = process.env.PORT || 8080;
