@@ -22,7 +22,7 @@ A RESTful API built with Node.js, Express, MongoDB, and JWT for authentication. 
 ```
 api/
 │
-├── models/
+├── middleware/
 │    └── verifyToken.js
 │
 ├── models/
