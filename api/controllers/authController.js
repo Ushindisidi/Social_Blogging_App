@@ -1,11 +1,6 @@
-import express from "express";
 import User from "../models/User.js";
 import bcrypt from "bcryptjs";
-
-const router = express.Router();
-
-// REGISTER
-router.post("/register", async (req, res) => {
+export const register = async (req, res) => {
   try {
     const salt = await bcrypt.genSalt(10);
     const hashedPass = await bcrypt.hash(req.body.password, salt);
@@ -20,10 +15,8 @@ router.post("/register", async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-});
-
-// LOGIN
-router.post("/login", async (req, res) => {
+};
+export const login = async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
     if (!user) {
@@ -40,6 +33,4 @@ router.post("/login", async (req, res) => {
   } catch (err) {
     return res.status(500).json("Server error. Please try again.");
   }
-});
-
-export default router;
+};
