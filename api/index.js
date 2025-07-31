@@ -1,5 +1,4 @@
 import express from "express";
-import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import path from "path";
@@ -9,14 +8,13 @@ import authRoute from "./routes/authRoutes.js";
 import userRoute from "./routes/userRoutes.js";
 import postRoute from "./routes/postsRoutes.js";
 import categoryRoute from "./routes/categoriesRoutes.js";
+import { connectDB } from "./config/db.js";
 
 const app = express();
 
 // Get __dirname in ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
-dotenv.config();
 
 app.use(express.json());
 
@@ -29,20 +27,13 @@ app.use(cors(corsOptions));
 
 // Static files
 app.use(express.static(path.join(__dirname, "public")));
-
-// MongoDB connection
-mongoose
-  .connect(process.env.MONGO_URL, {})
-  .then(() => console.log("✅ MongoDB Atlas connected successfully"))
-  .catch((err) => console.error("❌ MongoDB connection error:", err));
-
-
-
+// Database connection
+connectDB();
 // Routes
 console.log("✅ Mounting auth route...");
 app.get("/", (req, res) => {
   res.send("🚀 API is running!");
-  console.log('Wagwan Wadau')
+  console.log("Wagwan Wadau");
 });
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
