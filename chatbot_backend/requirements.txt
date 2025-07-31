@@ -1,0 +1,7 @@
+uvicorn
+crewai
+langchain
+langchain-google-genai
+google-generativeai
+chromadb
+python-dotenv
