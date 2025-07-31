@@ -9,6 +9,7 @@ import authRoute from "./routes/authRoutes.js";
 import userRoute from "./routes/userRoutes.js";
 import postRoute from "./routes/postsRoutes.js";
 import categoryRoute from "./routes/categoriesRoutes.js";
+import { connectDB } from "./config/db.js";
 
 const app = express();
 
@@ -31,18 +32,16 @@ app.use(cors(corsOptions));
 app.use(express.static(path.join(__dirname, "public")));
 
 // MongoDB connection
-mongoose
-  .connect(process.env.MONGO_URL, {})
-  .then(() => console.log("✅ MongoDB Atlas connected successfully"))
-  .catch((err) => console.error("❌ MongoDB connection error:", err));
-
-
-
+// mongoose
+//   .connect(process.env.MONGO_URL, {})
+//   .then(() => console.log("✅ MongoDB Atlas connected successfully"))
+//   .catch((err) => console.error("❌ MongoDB connection error:", err));
+connectDB();
 // Routes
 console.log("✅ Mounting auth route...");
 app.get("/", (req, res) => {
   res.send("🚀 API is running!");
-  console.log('Wagwan Wadau')
+  console.log("Wagwan Wadau");
 });
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
