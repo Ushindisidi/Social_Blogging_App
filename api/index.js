@@ -33,11 +33,17 @@ app.use(express.static(path.join(__dirname, "public")));
 // MongoDB connection
 mongoose
   .connect(process.env.MONGO_URL, {})
-  .then(() => console.log("✅ DB Connected"))
-  .catch((err) => console.log(err));
+  .then(() => console.log("✅ MongoDB Atlas connected successfully"))
+  .catch((err) => console.error("❌ MongoDB connection error:", err));
+
+
 
 // Routes
 console.log("✅ Mounting auth route...");
+app.get("/", (req, res) => {
+  res.send("🚀 API is running!");
+  console.log('Wagwan Wadau')
+});
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
