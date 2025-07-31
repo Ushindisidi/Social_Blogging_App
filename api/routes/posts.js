@@ -1,8 +1,10 @@
-const router = require("express").Router();
-const User = require("../models/User");
-const Post = require("../models/Post");
+import express from "express";
+import User from "../models/User.js";
+import Post from "../models/Post.js";
 
-//CREATE POST
+const router = express.Router();
+
+// CREATE POST
 router.post("/", async (req, res) => {
   const newPost = new Post(req.body);
   try {
@@ -13,7 +15,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-//UPDATE POST
+// UPDATE POST
 router.put("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -38,7 +40,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-//DELETE POST
+// DELETE POST
 router.delete("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -57,7 +59,7 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-//GET POST
+// GET POST
 router.get("/:id", async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
@@ -67,7 +69,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-//GET ALL POSTS
+// GET ALL POSTS
 router.get("/", async (req, res) => {
   const username = req.query.user;
   const catName = req.query.cat;
@@ -90,4 +92,4 @@ router.get("/", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

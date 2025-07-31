@@ -1,8 +1,10 @@
-const router = require("express").Router();
-const User = require("../models/User");
-const bcrypt = require("bcryptjs");
+import express from "express";
+import User from "../models/User.js";
+import bcrypt from "bcryptjs";
 
-//REGISTER
+const router = express.Router();
+
+// REGISTER
 router.post("/register", async (req, res) => {
   try {
     const salt = await bcrypt.genSalt(10);
@@ -20,7 +22,7 @@ router.post("/register", async (req, res) => {
   }
 });
 
-//LOGIN
+// LOGIN
 router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
@@ -40,5 +42,4 @@ router.post("/login", async (req, res) => {
   }
 });
 
-
-module.exports = router;
+export default router;
