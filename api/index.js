@@ -27,7 +27,7 @@ app.use(cors(corsOptions));
 // Static files
 app.use(express.static(path.join(__dirname, "public")));
 // Database connection
-connectDB();
+// connectDB();
 // Routes
 console.log("✅ Mounting auth route...");
 app.get("/", (req, res) => {
@@ -39,8 +39,23 @@ app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/categories", categoryRoute);
 
-// Start server
-const PORT = process.env.PORT || 8080;
-app.listen(PORT, () => {
-  console.log(`✅ Server running on http://localhost:${PORT}`);
-});
+// // Start server
+// const PORT = process.env.PORT || 8080;
+// app.listen(PORT, () => {
+//   console.log(`✅ Server running on http://localhost:${PORT}`);
+// });
+
+const startServer = async () => {
+  try {
+    await connectDB(); // Wait for DB connection
+    const PORT = process.env.PORT || 8080;
+    app.listen(PORT, () => {
+      console.log(`✅ Server running on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error("❌ Failed to connect to database:", error);
+    process.exit(1); // Exit the process with failure
+  }
+};
+
+startServer();
