@@ -1,4 +1,4 @@
-from rag_utils import setup_rag_pipeline, get_context_from_query
+from social_blogging_app.src.social_blogging_app.tools.rag_utils import setup_rag_pipeline, get_context_from_query
 
 if __name__ == "__main__":
     #  loading the vector store
