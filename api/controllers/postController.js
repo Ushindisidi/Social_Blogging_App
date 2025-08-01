@@ -4,11 +4,12 @@ export const createPost = async (req, res) => {
   const newPost = new Post(req.body);
   try {
     const savedPost = await newPost.save();
-    res.status(200).json(savedPost);
+    res.status(201).json(savedPost);
   } catch (err) {
     res
       .status(500)
       .json({ message: "Internal server error. Please try again." });
+    console.log(err.message);
   }
 };
 export const updatePost = async (req, res) => {
