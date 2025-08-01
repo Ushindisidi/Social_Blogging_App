@@ -13,7 +13,9 @@ export const register = async (req, res) => {
     const user = await newUser.save();
     res.status(200).json(user);
   } catch (err) {
-    res.status(500).json(err);
+    res
+      .status(500)
+      .json({ message: "Internal server error. Please try again." });
   }
 };
 export const login = async (req, res) => {
@@ -31,6 +33,8 @@ export const login = async (req, res) => {
     const { password, ...others } = user._doc;
     return res.status(200).json(others);
   } catch (err) {
-    return res.status(500).json("Server error. Please try again.");
+    res
+      .status(500)
+      .json({ message: "Internal server error. Please try again." });
   }
 };
