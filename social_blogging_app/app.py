@@ -17,10 +17,10 @@ from src.social_blogging_app.crew import SocialBloggingApp
 # Initialize FastAPI app
 app = FastAPI(title="Social Blogging API", version="1.0")
 
-# Add CORS so frontend can call the API
+# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Change to ["http://localhost:3000"] for your frontend
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -49,34 +49,56 @@ def generate_blog(request: BlogRequest):
     }
 
     try:
+        # Initializing and run crew
         crew_app = SocialBloggingApp()
         result = crew_app.crew().kickoff(inputs=inputs)
+        
+        # Extract content from crew result
+        blog_content = ""
+        if hasattr(result, 'raw'):
+            blog_content = str(result.raw)
+        elif hasattr(result, 'output'):
+            blog_content = str(result.output)
+        else:
+            blog_content = str(result)
 
-        # Try parsing to JSON if it's a string
-        if isinstance(result, str):
-            try:
-                result = json.loads(result)
-            except json.JSONDecodeError:
-                # If LLM returned plain text, wrap in JSON format
-                result = {
-                    "title": f"Blog on {request.topic}",
-                    "content": result.strip(),
-                    "hashtags": [f"#{request.topic.replace(' ', '')}", "#AI", "#Trending"]
-                }
+        # Trying to parse metadata from crew result
+        metadata = {}
+        try:
+            if hasattr(result, 'json') and result.json:
+                parsed_result = json.loads(result.json)
+                if isinstance(parsed_result, dict):
+                    metadata = parsed_result
+            elif hasattr(result, 'output') and isinstance(result.output, dict):
+                metadata = result.output
+        except:
+            pass
 
-        # Ensure keys exist
+        # Extracting title from content if not in metadata
+        title = metadata.get("title")
+        if not title and blog_content:
+            lines = blog_content.split('\n')
+            for line in lines:
+                if line.startswith('# '):
+                    title = line[2:].strip()
+                    break
+        if not title:
+            title = f"Blog Post: {request.topic}"
+
+        # Preparing final output
         final_output = {
-            "title": result.get("title", f"Blog on {request.topic}"),
-            "content": result.get("content", ""),
-            "hashtags": result.get("hashtags", ["#Blog", "#Trending"])
+            "title": title,
+            "content": blog_content,
+            "meta_description": metadata.get("meta_description", f"A blog post about {request.topic}"),
+            "hashtags": metadata.get("keywords", metadata.get("hashtags", [request.topic.lower().replace(' ', '')]))
         }
 
         return final_output
 
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"An error occurred while generating the blog: {e}")
+        raise HTTPException(status_code=500, detail=f"An error occurred while generating the blog: {str(e)}")
 
-# Run with uvicorn if executed directly
+# Running with uvicorn if executed directly
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=5000)
