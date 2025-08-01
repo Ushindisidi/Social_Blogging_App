@@ -36,3 +36,5 @@ metadata_generation_task:
     A structured JSON object containing the blog summary, meta-description, and three
     platform-specific social media posts with relevant hashtags.
   agent: summarizing_agent
+  output_file: blog_post_metadata.json
+  
