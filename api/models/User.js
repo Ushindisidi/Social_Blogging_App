@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
-      select: false,
+      select: true,
     },
     profilePic: {
       type: String,
@@ -69,6 +69,7 @@ const UserSchema = new mongoose.Schema(
       type: Date,
       select: false,
     },
+    lastLogin: { type: Date, default: null },
   },
   { timestamps: true }
 );
