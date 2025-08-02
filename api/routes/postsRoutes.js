@@ -7,13 +7,14 @@ import {
   getPost,
   updatePost,
 } from "../controllers/postController.js";
-
+import { uploadCoverImage } from "../middleware/uploadMiddleware.js";
+import { verifyToken } from "../middleware/verifyToken.js";
 const router = express.Router();
 
 // CREATE POST
-router.post("/", createPost);
+router.post("/", uploadCoverImage, createPost);
 // UPDATE POST
-router.put("/:id", updatePost);
+router.put("/:id", uploadCoverImage, updatePost);
 // DELETE POST
 router.delete("/:id", deletePost);
 // GET POST
