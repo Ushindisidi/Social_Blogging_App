@@ -50,7 +50,7 @@ class BlogRequest(BaseModel):
 def read_root():
     logger.info("Root endpoint accessed")
     return {"message": "Welcome to the Social Blogging API"}
-# generate_blog function
+#  generate_blog function
 @app.post("/api/generate-blog")
 def generate_blog(request: BlogRequest):
     logger.info(f"Blog generation requested for topic: '{request.topic}'")
@@ -80,9 +80,9 @@ def generate_blog(request: BlogRequest):
         else:
             raise ValueError(f"Unexpected crew result format: {type(result)}. The output is missing the 'raw' attribute.")
 
-        # Clean and parse the JSON string from the raw attribute
+        # Cleaning and parse the JSON string from the raw attribute
         cleaned_result_string = raw_result_string.strip()
-        # Remove any leading/trailing markdown code block tags if they exist
+        # Remove any trailing markdown code block tags if they exist
         if cleaned_result_string.startswith("```json"):
             cleaned_result_string = cleaned_result_string.replace("```json", "").strip()
         if cleaned_result_string.endswith("```"):
@@ -91,12 +91,12 @@ def generate_blog(request: BlogRequest):
         parsed_result = json.loads(cleaned_result_string)
 
         # Extracting the content, title, and metadata from the parsed result
-        # I am going to use the blog topic for the title if one isn't provided.
-        title = parsed_result.get("title", f"Blog Post: {request.topic}")
-        blog_content = parsed_result.get("blog_summary", "No content was generated.")
-        meta_description = parsed_result.get("meta_description", f"A blog post about {request.topic}.")
+        # Checks for multiple possible keys for content, title, and meta_description
+        title = parsed_result.get("title", parsed_result.get("blogTitle", f"Blog Post: {request.topic}"))
+        blog_content = parsed_result.get("blog_summary", parsed_result.get("blogSummary", parsed_result.get("summary", "No content was generated.")))
+        meta_description = parsed_result.get("meta_description", parsed_result.get("metaDescription", f"A blog post about {request.topic}."))
 
-        # Extracting hashtags from social media posts or create a default list
+        # Extracted hashtags from social media posts or create a default list
         social_media_posts = parsed_result.get("social_media_posts", {})
         hashtags = []
         if 'twitter' in social_media_posts:

@@ -35,3 +35,137 @@
 2025-08-02 13:33:07 - INFO - Starting crew execution...
 2025-08-02 13:33:40 - INFO - Crew execution completed successfully
 2025-08-02 13:33:40 - INFO - Blog generation successful - Title: 'Blog Post: ai in kenya'
+2025-08-02 14:03:38 - INFO - Social Blogging API starting up...
+2025-08-02 14:03:50 - INFO - Root endpoint accessed
+2025-08-02 14:04:06 - INFO - Blog generation requested for topic: 'ai'
+2025-08-02 14:04:06 - INFO - Starting crew execution...
+2025-08-02 14:04:39 - INFO - Crew execution completed successfully
+2025-08-02 14:04:39 - INFO - Blog generation successful - Title: 'Blog Post: ai'
+2025-08-02 14:07:27 - INFO - Social Blogging API starting up...
+2025-08-02 14:07:42 - INFO - Root endpoint accessed
+2025-08-02 14:08:02 - INFO - Blog generation requested for topic: 'ai'
+2025-08-02 14:08:02 - INFO - Starting crew execution...
+2025-08-02 14:08:38 - INFO - Crew execution completed successfully
+2025-08-02 14:08:38 - INFO - Blog generation successful - Title: 'Blog Post: ai'
+2025-08-02 14:10:20 - INFO - Root endpoint accessed
+2025-08-02 14:13:46 - INFO - Blog generation requested for topic: 'ai'
+2025-08-02 14:13:46 - INFO - Starting crew execution...
+2025-08-02 14:14:14 - ERROR - Blog generation failed: litellm.RateLimitError: litellm.RateLimitError: VertexAIException - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "location": "global",
+              "model": "gemini-1.5-flash"
+            },
+            "quotaValue": "50"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "22s"
+      }
+    ]
+  }
+}
+
+2025-08-02 14:16:36 - INFO - Social Blogging API starting up...
+2025-08-02 14:16:46 - INFO - Blog generation requested for topic: 'ai in smart homes'
+2025-08-02 14:16:46 - INFO - Starting crew execution...
+2025-08-02 14:16:48 - ERROR - Blog generation failed: litellm.RateLimitError: litellm.RateLimitError: VertexAIException - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "location": "global",
+              "model": "gemini-1.5-flash"
+            },
+            "quotaValue": "50"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "47s"
+      }
+    ]
+  }
+}
+
+2025-08-02 14:17:24 - INFO - Root endpoint accessed
+2025-08-02 14:18:11 - INFO - Blog generation requested for topic: 'ai'
+2025-08-02 14:18:11 - INFO - Starting crew execution...
+2025-08-02 14:18:14 - ERROR - Blog generation failed: litellm.RateLimitError: litellm.RateLimitError: VertexAIException - {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits.",
+    "status": "RESOURCE_EXHAUSTED",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.QuotaFailure",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaDimensions": {
+              "location": "global",
+              "model": "gemini-1.5-flash"
+            },
+            "quotaValue": "50"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.Help",
+        "links": [
+          {
+            "description": "Learn more about Gemini API quotas",
+            "url": "https://ai.google.dev/gemini-api/docs/rate-limits"
+          }
+        ]
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.RetryInfo",
+        "retryDelay": "22s"
+      }
+    ]
+  }
+}
+
+2025-08-02 14:19:27 - INFO - Social Blogging API starting up...
+2025-08-02 14:20:13 - INFO - Social Blogging API starting up...
