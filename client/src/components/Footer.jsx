@@ -7,17 +7,16 @@ import {
   FaYoutube,
 } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import logo from '../../src/assets/blog_logo.svg'
+import logo from "../../src/assets/blog_logo.svg";
 
 export default function Footer() {
   return (
-    <footer className="absolute inset-x-0 bottom-0 bg-white dark:bg-gray-900 border-t border-gray-300 dark:border-gray-700 px-6 py-8">
+    <footer className=" inset-x-0 bottom-0 bg-white dark:bg-gray-900 border-t border-gray-300 dark:border-gray-700 px-6 py-8">
       {/* Top Section */}
       <div className="flex flex-col md:flex-row justify-between items-center gap-6">
         {/* Logo */}
         <div className="flex items-center space-x-2">
           <img src={logo} alt="Toto Logo" className="w-[150px] h-11" />
-        
         </div>
 
         {/* Navigation Links */}
@@ -29,11 +28,21 @@ export default function Footer() {
 
         {/* Social Icons */}
         <div className="flex gap-4 text-purple-800 dark:text-white text-xl">
-          <a href="#"><FaFacebookF /></a>
-          <a href="#"><FaInstagram /></a>
-          <a href="#"><FaXTwitter /></a>
-          <a href="#"><FaLinkedinIn /></a>
-          <a href="#"><FaYoutube /></a>
+          <a href="#">
+            <FaFacebookF />
+          </a>
+          <a href="#">
+            <FaInstagram />
+          </a>
+          <a href="#">
+            <FaXTwitter />
+          </a>
+          <a href="#">
+            <FaLinkedinIn />
+          </a>
+          <a href="#">
+            <FaYoutube />
+          </a>
         </div>
       </div>
 
