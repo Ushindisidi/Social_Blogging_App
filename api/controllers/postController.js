@@ -4,8 +4,8 @@ import slugify from "slugify";
 import { promises as fs } from "fs";
 export const createPost = async (req, res) => {
   try {
-    const { title, summary, content, categories, tags, author } = req.body;
-    // const author = req.user.id; // From authMiddleware
+    const { title, summary, content, categories, tags } = req.body;
+    const author = req.user.id; // From authMiddleware
 
     // Validate required fields
     if (!title || !content) {
