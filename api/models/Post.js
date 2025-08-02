@@ -1,8 +1,14 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
+import slugify from "slugify";
 
-const PostSchema = new mongoose.Schema(
+const postSchema = new mongoose.Schema(
   {
     title: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    slug: {
       type: String,
       required: true,
       unique: true,
@@ -10,21 +16,41 @@ const PostSchema = new mongoose.Schema(
     desc: {
       type: String,
       required: true,
+      trim: true,
     },
-    photo: {
-      type: String,
-      required: false,
-    },
-    username: {
-      type: String,
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
+    img: {
+      type: String,
+      default: "",
+    },
     categories: {
-      type: Array,
-      required: false,
+      type: [String],
+      default: [],
+    },
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    views: {
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Post", PostSchema);
+// Auto-generate slug from title
+postSchema.pre("validate", function (next) {
+  if (this.title && !this.slug) {
+    this.slug = slugify(this.title, { lower: true, strict: true });
+  }
+  next();
+});
+
+export default mongoose.model("Post", postSchema);
