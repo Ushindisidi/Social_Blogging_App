@@ -50,8 +50,7 @@ class BlogRequest(BaseModel):
 def read_root():
     logger.info("Root endpoint accessed")
     return {"message": "Welcome to the Social Blogging API"}
-
-# Generate blog endpoint
+# generate_blog function
 @app.post("/api/generate-blog")
 def generate_blog(request: BlogRequest):
     logger.info(f"Blog generation requested for topic: '{request.topic}'")
@@ -73,50 +72,55 @@ def generate_blog(request: BlogRequest):
         crew_app = SocialBloggingApp()
         result = crew_app.crew().kickoff(inputs=inputs)
         logger.info("Crew execution completed successfully")
-        
-        # Extract content from crew result
-        blog_content = ""
+
+        # Handles the CrewOutput object and parse its raw string attribute.
+        raw_result_string = ""
         if hasattr(result, 'raw'):
-            blog_content = str(result.raw)
-        elif hasattr(result, 'output'):
-            blog_content = str(result.output)
+            raw_result_string = result.raw
         else:
-            blog_content = str(result)
+            raise ValueError(f"Unexpected crew result format: {type(result)}. The output is missing the 'raw' attribute.")
 
-        # Trying to parse metadata from crew result
-        metadata = {}
-        try:
-            if hasattr(result, 'json') and result.json:
-                parsed_result = json.loads(result.json)
-                if isinstance(parsed_result, dict):
-                    metadata = parsed_result
-            elif hasattr(result, 'output') and isinstance(result.output, dict):
-                metadata = result.output
-        except:
-            pass
+        # Clean and parse the JSON string from the raw attribute
+        cleaned_result_string = raw_result_string.strip()
+        # Remove any leading/trailing markdown code block tags if they exist
+        if cleaned_result_string.startswith("```json"):
+            cleaned_result_string = cleaned_result_string.replace("```json", "").strip()
+        if cleaned_result_string.endswith("```"):
+            cleaned_result_string = cleaned_result_string.rsplit("```", 1)[0].strip()
 
-        # Extracting title from content if not in metadata
-        title = metadata.get("title")
-        if not title and blog_content:
-            lines = blog_content.split('\n')
-            for line in lines:
-                if line.startswith('# '):
-                    title = line[2:].strip()
-                    break
-        if not title:
-            title = f"Blog Post: {request.topic}"
+        parsed_result = json.loads(cleaned_result_string)
 
-        # Preparing final output
+        # Extracting the content, title, and metadata from the parsed result
+        # I am going to use the blog topic for the title if one isn't provided.
+        title = parsed_result.get("title", f"Blog Post: {request.topic}")
+        blog_content = parsed_result.get("blog_summary", "No content was generated.")
+        meta_description = parsed_result.get("meta_description", f"A blog post about {request.topic}.")
+
+        # Extracting hashtags from social media posts or create a default list
+        social_media_posts = parsed_result.get("social_media_posts", {})
+        hashtags = []
+        if 'twitter' in social_media_posts:
+            # Simple extraction of hashtags from a social media post string
+            for word in social_media_posts['twitter'].split():
+                if word.startswith('#'):
+                    hashtags.append(word.strip('#'))
+        if not hashtags:
+            hashtags = [request.topic.lower().replace(' ', '')]
+        
+        # Preparing the final, well-structured output
         final_output = {
             "title": title,
             "content": blog_content,
-            "meta_description": metadata.get("meta_description", f"A blog post about {request.topic}"),
-            "hashtags": metadata.get("keywords", metadata.get("hashtags", [request.topic.lower().replace(' ', '')]))
+            "meta_description": meta_description,
+            "hashtags": hashtags
         }
 
         logger.info(f"Blog generation successful - Title: '{title}'")
         return final_output
 
+    except json.JSONDecodeError as e:
+        logger.error(f"Failed to parse crew output as JSON: {e}")
+        raise HTTPException(status_code=500, detail=f"An error occurred: The crew's output was not valid JSON.")
     except Exception as e:
         logger.error(f"Blog generation failed: {str(e)}")
         raise HTTPException(status_code=500, detail=f"An error occurred while generating the blog: {str(e)}")

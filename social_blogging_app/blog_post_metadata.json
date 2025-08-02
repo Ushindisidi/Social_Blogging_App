@@ -1,11 +1,11 @@
 ```json
 {
-  "summary": "This blog post explores the evolving relationship between human artists and AI art generators, moving beyond anxieties about job displacement to highlight the potential for mutually beneficial collaboration. It examines how artists are using AI to augment their creative processes, leading to entirely new artistic forms and styles.  Ethical considerations, future trends, and a call to action encouraging exploration of AI art tools are also discussed.",
-  "meta_description": "Discover the future of art! Explore the evolving partnership between human artists and AI, examining the opportunities and challenges of AI art generation, ethical considerations, and the emergence of new artistic forms. Learn how AI is transforming creative workflows.",
-  "social_media_posts": {
-    "twitter": "Is AI art a collaborator or competitor? 🤔 This blog post delves into the exciting & complex relationship between human artists & AI, exploring the creative opportunities & ethical considerations. #AIArt #ArtificialIntelligence #DigitalArt #ArtTech",
-    "linkedin": "The future of art is collaborative.  Learn how AI is transforming the creative landscape, empowering artists with new tools & techniques while raising important ethical questions.  Read our latest blog post on the human-AI creative partnership. #AI #ArtificialIntelligence #CreativeTechnology #DigitalTransformation #Art",
-    "instagram": "✨ AI Art: The future is here! ✨  Explore the incredible potential of AI in art – from innovative collaborations to ethical dilemmas.  Tap the link in bio to discover how artists are redefining creativity. #AIArt #AIArtist #DigitalArt #ArtTechnology #CreativeTech #FutureofArt"
+  "blogSummary": "Kenya's ambitious national AI strategy promises economic growth but faces ethical challenges in its data labelling workforce.  The blog post examines the opportunities and concerns, including low wages, worker safety, and exploitation, while advocating for fair labor practices and responsible AI development in Kenya.",
+  "metaDescription": "Discover the dual nature of Kenya's AI revolution. Explore the exciting potential for economic growth alongside the ethical concerns surrounding its data labelling workforce. Learn about solutions for fair wages and responsible AI development.",
+  "socialMediaPosts": {
+    "twitter": "Kenya's AI journey: immense potential or ethical exploitation?  Balancing opportunity & ethics in the data labelling industry is crucial. #KenyaAI #AIethics #DataLabelling #EthicalAI",
+    "linkedin": "Kenya's national AI strategy is ambitious, but its success depends on addressing ethical concerns within the data labelling workforce.  Let's discuss fair wages, worker safety, and responsible AI development. #AI #Kenya #Ethics #DataLabelling #SustainableAI",
+    "instagram": "Is Kenya's AI revolution leaving anyone behind? 🤔 We explore the ethical dilemmas facing data labelers and the path towards a more responsible future for AI in Africa.  #Kenya #AI #EthicalAI #Data #Africa"
   }
 }
 ```
