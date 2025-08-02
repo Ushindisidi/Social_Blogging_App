@@ -5,6 +5,11 @@ from datetime import datetime
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+#throttling imports
+from slowapi.errors import RateLimitExceeded
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_ipaddr
+import redis.asyncio as redis
 
 # Add 'src' directory to Python path
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -17,7 +22,12 @@ from src.social_blogging_app.crew import SocialBloggingApp
 # Initialize FastAPI app
 app = FastAPI(title="Social Blogging API", version="1.0")
 
-# Add CORS middleware
+# I am setting a limit of 5 requests per minute, per IP address.
+limiter = Limiter(key_func=get_ipaddr, default_limits=["5/minute"])
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+# Added CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -41,7 +51,7 @@ def generate_blog(request: BlogRequest):
     if not request.topic.strip():
         raise HTTPException(status_code=400, detail="Topic cannot be empty")
 
-    # Prepare crew inputs
+    # Preparing crew inputs
     inputs = {
         "blog_topic": request.topic,
         "current_year": str(datetime.now().year),
