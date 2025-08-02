@@ -1,0 +1,7 @@
+2025-08-02 11:01:12 - INFO - Social Blogging API starting up...
+2025-08-02 11:01:22 - INFO - Root endpoint accessed
+2025-08-02 11:01:36 - INFO - Root endpoint accessed
+2025-08-02 11:01:58 - INFO - Blog generation requested for topic: 'ai in art'
+2025-08-02 11:01:58 - INFO - Starting crew execution...
+2025-08-02 11:02:30 - INFO - Crew execution completed successfully
+2025-08-02 11:02:30 - INFO - Blog generation successful - Title: 'Blog Post: ai in art'

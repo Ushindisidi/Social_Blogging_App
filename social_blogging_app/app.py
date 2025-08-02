@@ -5,11 +5,15 @@ from datetime import datetime
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+
 #throttling imports
 from slowapi.errors import RateLimitExceeded
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_ipaddr
 import redis.asyncio as redis
+
+# Import logger
+from logger import logger
 
 # Add 'src' directory to Python path
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -21,6 +25,7 @@ from src.social_blogging_app.crew import SocialBloggingApp
 
 # Initialize FastAPI app
 app = FastAPI(title="Social Blogging API", version="1.0")
+logger.info("Social Blogging API starting up...")
 
 # I am setting a limit of 5 requests per minute, per IP address.
 limiter = Limiter(key_func=get_ipaddr, default_limits=["5/minute"])
@@ -43,12 +48,16 @@ class BlogRequest(BaseModel):
 # Root endpoint
 @app.get("/")
 def read_root():
+    logger.info("Root endpoint accessed")
     return {"message": "Welcome to the Social Blogging API"}
 
 # Generate blog endpoint
 @app.post("/api/generate-blog")
 def generate_blog(request: BlogRequest):
+    logger.info(f"Blog generation requested for topic: '{request.topic}'")
+    
     if not request.topic.strip():
+        logger.warning("Empty topic provided")
         raise HTTPException(status_code=400, detail="Topic cannot be empty")
 
     # Preparing crew inputs
@@ -59,9 +68,11 @@ def generate_blog(request: BlogRequest):
     }
 
     try:
+        logger.info("Starting crew execution...")
         # Initializing and run crew
         crew_app = SocialBloggingApp()
         result = crew_app.crew().kickoff(inputs=inputs)
+        logger.info("Crew execution completed successfully")
         
         # Extract content from crew result
         blog_content = ""
@@ -103,12 +114,15 @@ def generate_blog(request: BlogRequest):
             "hashtags": metadata.get("keywords", metadata.get("hashtags", [request.topic.lower().replace(' ', '')]))
         }
 
+        logger.info(f"Blog generation successful - Title: '{title}'")
         return final_output
 
     except Exception as e:
+        logger.error(f"Blog generation failed: {str(e)}")
         raise HTTPException(status_code=500, detail=f"An error occurred while generating the blog: {str(e)}")
 
 # Running with uvicorn if executed directly
 if __name__ == "__main__":
     import uvicorn
+    logger.info("Starting Social Blogging API server...")
     uvicorn.run(app, host="0.0.0.0", port=5000)
