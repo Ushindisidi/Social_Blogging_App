@@ -1,46 +1,64 @@
-const express = require('express');
+import express from "express";
+import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
+
+import authRoute from "./routes/authRoutes.js";
+import userRoute from "./routes/userRoutes.js";
+import postRoute from "./routes/postsRoutes.js";
+import categoryRoute from "./routes/categoriesRoutes.js";
+import commentRoute from "./routes/commentsRoutes.js";
+import { connectDB } from "./config/db.js";
+
 const app = express();
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const cors = require('cors');
-const authRoute = require('./routes/auth');
-const userRoute = require('./routes/user');
-const postRoute = require('./routes/posts');
-const categoryRoute = require('./routes/categories');
-const path = require('path');
 
+// Get __dirname in ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-dotenv.config()
-app.use(express.json())
-// app.use(cors())
-// for local development only
+app.use(express.json());
+
+// CORS options
 const corsOptions = {
-    origin: ["https://yourfrontend.com","https://localhost:3000"],
-    credentials: true,
+  origin: ["https://yourfrontend.com", "http://localhost:3000"],
+  credentials: true,
 };
-app.use(cors(corsOptions))
-app.use(express.static(path.join(__dirname,"public")))
+app.use(cors(corsOptions));
 
-mongoose
-    .connect(process.env.MONGO_URL, {
-      })
-    .then(()=> console.log('✅ DB Connected'))
-    .catch(err=> console.log(err))
-
-// Mounting routes
+// Static files
+app.use(express.static(path.join(__dirname, "public")));
+// Database connection
+// connectDB();
+// Routes
 console.log("✅ Mounting auth route...");
-app.use('/api/auth', authRoute);
-app.use('/api/users', userRoute);
-app.use('/api/posts', postRoute);
-app.use('/api/categories', categoryRoute);
-
-app.get('/', (req, res) => {
-  console.log("✅ GET / route hit");
-  res.status(200).send("Hello from backend.Life is Great on this side. T for Tough");
+app.get("/", (req, res) => {
+  res.send("🚀 API is running!");
+  console.log("Wagwan Wadau");
 });
-const PORT = process.env.PORT|| 8080;
-// const PORT = 8080;
-app.listen(PORT, () => {
-  console.log(`✅ Server running on http://localhost:${PORT}`);
-});
+app.use("/api/auth", authRoute);
+app.use("/api/users", userRoute);
+app.use("/api/posts", postRoute);
+app.use("/api/categories", categoryRoute);
+app.use("/api/comments", commentRoute);
 
+
+// // Start server
+// const PORT = process.env.PORT || 8080;
+// app.listen(PORT, () => {
+//   console.log(`✅ Server running on http://localhost:${PORT}`);
+// });
+
+const startServer = async () => {
+  try {
+    await connectDB(); // Wait for DB connection
+    const PORT = process.env.PORT || 8080;
+    app.listen(PORT, () => {
+      console.log(`✅ Server running on http://localhost:${PORT}`);
+    });
+  } catch (error) {
+    console.error("❌ Failed to connect to database:", error);
+    process.exit(1); // Exit the process with failure
+  }
+};
+
+startServer();
