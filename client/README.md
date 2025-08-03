@@ -1,8 +1,14 @@
-# 📰 Social Blog App – Frontend
+# 📰 Social Blog App
 
-This is the frontend of the Social Blog App – a modern blogging platform that allows users to register, create posts, comment, and engage with a community.
+A modern blogging platform that allows users to register, create posts, comment, and engage with a community.
 
-Built with **React**, **Tailwind CSS**, and **Flowbite React**, this app connects to a backend API for all functionality.
+## 🏗️ Tech Stack
+
+### Frontend
+Built with **React**, **Tailwind CSS**, and **Flowbite React**
+
+### Backend
+The backend is built with **Node.js** and **Express**, providing a robust API for the frontend to interact with. It handles user authentication, post management, comments, and other core functionalities.
 
 ---
 
@@ -46,6 +52,13 @@ The app should now be live at [http://localhost:5173](http://localhost:5173)
 * **Flowbite React** – UI components
 * **Axios** – API communication
 * **React Router** – Routing/navigation
+
+## 👥 Team
+
+- **Bereket Eshete** - Web Development
+- **Boaz Marube** - Web Development
+- **Ushindi Sidi** - Gen AI Specialist
+- **Saba Hadis** - UI/UX Designer
 
 ---
 
