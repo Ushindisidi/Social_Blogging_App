@@ -169,3 +169,44 @@
 
 2025-08-02 14:19:27 - INFO - Social Blogging API starting up...
 2025-08-02 14:20:13 - INFO - Social Blogging API starting up...
+2025-08-03 11:17:34 - INFO - Social Blogging API starting up...
+2025-08-03 11:17:40 - INFO - Root endpoint accessed
+2025-08-03 11:18:04 - INFO - Blog generation requested for topic: 'Generate a post about digital marketing trends'
+2025-08-03 11:18:04 - INFO - Starting crew execution...
+2025-08-03 11:18:40 - INFO - Crew execution completed successfully
+2025-08-03 11:18:40 - INFO - Blog generation successful - Title: 'Blog Post: Generate a post about digital marketing trends'
+2025-08-03 11:27:40 - INFO - Social Blogging API starting up...
+2025-08-03 11:27:56 - INFO - Root endpoint accessed
+2025-08-03 11:27:58 - INFO - Root endpoint accessed
+2025-08-03 11:28:56 - INFO - Blog generation requested for topic: 'ai in art'
+2025-08-03 11:28:56 - INFO - Starting crew execution...
+2025-08-03 11:29:29 - INFO - Crew execution completed successfully
+2025-08-03 11:29:29 - INFO - Blog generation successful - Title: 'Top Ai In Art Insights and Trends'
+2025-08-03 11:43:17 - INFO - Social Blogging API starting up...
+2025-08-03 11:43:29 - INFO - Root endpoint accessed
+2025-08-03 11:43:49 - INFO - Blog generation requested for topic: 'ai in art'
+2025-08-03 11:43:49 - INFO - Starting crew execution...
+2025-08-03 11:44:25 - INFO - Crew execution completed successfully
+2025-08-03 11:44:26 - INFO - Parsed JSON keys: ['blogSummary', 'metaDescription', 'socialMediaPosts']
+2025-08-03 11:44:26 - INFO - Full parsed result: {
+  "blogSummary": "AI art is revolutionizing the art world, sparking both exciting collaborations and ethical debates. This blog post explores the evolving landscape of AI art, examining human-AI partnerships, copyright controversies, the impact on the art market, ethical considerations, emerging trends, and the future of creative expression. It also provides resources for those interested in experimenting with AI art tools.",
+  "metaDescription": "Explore the transformative power of AI in art. This post delves into the collaborations, controversies, and future of AI-generated art, addressing copyright, ethics, and the impact on the art market. Discover emerging trends and resources to get started with AI art tools.",
+  "socialMediaPosts": {
+    "twitter": "AI art: collaboration or controversy? \ud83e\udd14 This post explores the evolving landscape of AI art, from human-AI partnerships to ethical dilemmas & the future of creativity. #AIArt #DigitalArt #ArtificialIntelligence #ArtTech",
+    "linkedin": "The intersection of art and AI is reshaping the creative landscape.  Learn about the opportunities and challenges of AI art, including copyright, market disruption, and ethical considerations.  #AI #ArtificialIntelligence #Art #CreativeTechnology #DigitalTransformation",
+    "instagram": "\ud83e\udd2f AI is changing art forever!  From breathtaking collaborations to mind-bending ethical questions, explore the fascinating world of AI-generated art.  Tap the link in bio to read more! \u2728 #AIArt #AIArtist #DigitalArt #Art #CreativeTech #NewMediaArt"
+  }
+}
+2025-08-03 11:44:26 - INFO - Social media posts found: {}
+2025-08-03 11:44:26 - INFO - Social media posts type: <class 'dict'>
+2025-08-03 11:44:26 - INFO - Final hashtags: ['aiinart']
+2025-08-03 11:44:26 - INFO - Final output: {
+  "title": "Top Ai In Art Insights and Trends",
+  "content": "AI art is revolutionizing the art world, sparking both exciting collaborations and ethical debates. This blog post explores the evolving landscape of AI art, examining human-AI partnerships, copyright controversies, the impact on the art market, ethical considerations, emerging trends, and the future of creative expression. It also provides resources for those interested in experimenting with AI art tools.",
+  "meta_description": "Explore the transformative power of AI in art. This post delves into the collaborations, controversies, and future of AI-generated art, addressing copyright, ethics, and the impact on the art market. Discover emerging trends and resources to get started with AI art tools.",
+  "social_media_posts": {},
+  "hashtags": [
+    "aiinart"
+  ]
+}
+2025-08-03 11:44:26 - INFO - Blog generation successful - Title: 'Top Ai In Art Insights and Trends'
