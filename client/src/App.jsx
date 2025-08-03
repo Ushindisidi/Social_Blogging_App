@@ -8,6 +8,7 @@ import SignUp from "./pages/SignUp";
 import DashBoard from "./pages/DashBoard";
 import ForgotPassword from "./pages/ForgetPassword";
 import CreatePost from "./pages/CreatePost";
+import ProtectedRoute from "./components/ProtectedRoutes";
 
 export default function App() {
   return (
@@ -17,7 +18,11 @@ export default function App() {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/dashboard" element={<DashBoard />} />
+          <Route path="/dashboard" element={
+          <ProtectedRoute>
+            <DashBoard />
+          </ProtectedRoute>
+        } />
           <Route path="/sign-in" element={<SignIn />} />
           <Route path="/createpost" element={<CreatePost />} />
           <Route path="/signup" element={<SignUp />} />
