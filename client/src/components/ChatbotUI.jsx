@@ -25,7 +25,7 @@ const ChatbotUI = ({ onClose }) => {
   const chatContainerRef = useRef(null);
 
   // API Configuration
-  const API_BASE_URL = "https://social-blogging-app-3z4g.onrender.com";
+  const API_BASE_URL = "https://social-blogging-api.onrender.com";
 
   // Sample questions relevant to a blog assistant
   const sampleQuestions = [
