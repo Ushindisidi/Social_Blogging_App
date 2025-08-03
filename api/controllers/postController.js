@@ -33,11 +33,12 @@ export const createPost = async (req, res) => {
   }
 };
 // controllers/postController.js
+
 export const updatePost = async (req, res) => {
   try {
     const { id } = req.params;
     const { title, summary, content, categories, tags, author } = req.body;
-    const userId = author;
+    const userId = req.user.id; // From auth middleware
 
     // 1. Find the post
     const post = await Post.findById(id);
@@ -83,8 +84,7 @@ export const updatePost = async (req, res) => {
 export const deletePost = async (req, res) => {
   try {
     const { id } = req.params;
-    //const userId = req.user.id; // From auth middleware
-    const userId = "688c86091a7edd88e5be5a31";
+    const userId = req.user.id; // From auth middleware
     // 1. Find the post
     const post = await Post.findById(id);
     if (!post) {
@@ -152,7 +152,6 @@ export const getPost = async (req, res) => {
     res.status(500).json({ error: "Failed to fetch post" });
   }
 };
-
 export const getAllPost = async (req, res) => {
   try {
     // Parse query parameters with defaults

@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
+import cookieParser from "cookie-parser";
 
 import authRoute from "./routes/authRoutes.js";
 import userRoute from "./routes/userRoutes.js";
@@ -18,10 +19,19 @@ const __dirname = path.dirname(__filename);
 
 app.use(express.json());
 
+app.use(cookieParser());
 // CORS options
 const corsOptions = {
-  origin: ["https://yourfrontend.com", "http://localhost:3000"],
+  origin: ["https://yourfrontend.com", "http://localhost:3000",
+    'http://localhost:3000',  
+    'http://localhost:5173',  
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:5173'
+
+  ],
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept', 'Authorization','Cookie']
 };
 app.use(cors(corsOptions));
 
@@ -40,8 +50,6 @@ app.use("/api/users", userRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/categories", categoryRoute);
 app.use("/api/comments", commentRoute);
-
-
 // // Start server
 // const PORT = process.env.PORT || 8080;
 // app.listen(PORT, () => {
