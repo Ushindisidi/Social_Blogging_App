@@ -38,7 +38,7 @@ export default function App() {
   const navItems = [
     { name: 'Home', icon: Home, link: '/' },
     { name: 'All Posts', icon: FileText, link: '/' },
-    { name: 'Create Post', icon: PlusSquare, link: '#' },
+    { name: 'Create Post', icon: PlusSquare, link: '/createpost' },
     { name: 'Dashboard', icon: LayoutDashboard, link: '#' },
   ];
 
@@ -73,12 +73,12 @@ export default function App() {
 
       {/* Sidebar container */}
       <aside
-        className={`fixed top-0 left-0 h-screen z-50 flex flex-col p-4 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 transition-all duration-300 ease-in-out shadow-lg
+        className={`fixed top-[130px] left-0 h-screen z-50 flex flex-col p-4 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 transition-all duration-300 ease-in-out shadow-lg
           ${isSidebarOpen ? 'w-64 translate-x-0' : 'w-64 -translate-x-full'} md:static md:translate-x-0
           ${isCollapsed ? 'md:w-20' : 'md:w-64'}`}
       >
         {/* Sidebar Header with collapse button for desktop */}
-        <div className="flex justify-between items-center mb-6">
+        <div className=" flex justify-between items-center mb-6">
           <div
             className={`flex items-center space-x-2 transition-opacity duration-300 ${
               isCollapsed ? 'md:opacity-0 md:hidden' : ''
