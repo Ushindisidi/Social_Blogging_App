@@ -43,12 +43,12 @@ const ChatbotUI = ({ onClose }) => {
     }
   }, [messages, isTyping]);
 
-  // Function to call your API and get a bot response
+  // Function to call API and get a bot response
   const triggerBotResponse = async (currentMessages, userMessage) => {
     setIsTyping(true);
     
     try {
-      // Make API call to your deployed backend
+      // Make API call to deployed backend
       const response = await fetch(`${API_BASE_URL}/api/generate-blog`, {
         method: 'POST',
         headers: {
