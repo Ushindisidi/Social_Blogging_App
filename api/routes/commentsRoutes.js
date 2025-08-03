@@ -1,21 +1,20 @@
-import express from 'express';
-import { verifyToken } from '../middleware/verifyToken.js';
+import express from "express";
 import {
   createComment,
-  deleteComment,
-  editComment,
   getPostComments,
-  getcomments,
   likeComment,
-} from '../controllers/commentsController.js';
+  editComment,
+  deleteComment,
+} from "../controllers/commentsController.js";
+import { verifyToken } from "../middleware/verifyToken.js";
 
 const router = express.Router();
 
-router.post('/create', verifyToken, createComment);
-router.get('/getPostComments/:postId', getPostComments);
-router.put('/likeComment/:commentId', verifyToken, likeComment);
-router.put('/editComment/:commentId', verifyToken, editComment);
-router.delete('/deleteComment/:commentId', verifyToken, deleteComment);
-router.get('/getcomments', verifyToken, getcomments);
+// Create comment for a specific post
+router.post("/posts/:id/", verifyToken, createComment);
+router.get("/posts/:id/", getPostComments);
+router.put("/comments/:commentId/like", verifyToken, likeComment);
+router.put("/comments/:commentId", verifyToken, editComment);
+router.delete("/:commentId", verifyToken, deleteComment);
 
 export default router;
