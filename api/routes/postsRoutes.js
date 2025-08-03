@@ -12,7 +12,7 @@ import { verifyToken } from "../middleware/verifyToken.js";
 const router = express.Router();
 
 // CREATE POST
-router.post("/", uploadCoverImage, createPost);
+router.post("/", uploadCoverImage, verifyToken, createPost);
 // UPDATE POST
 router.put("/:id", uploadCoverImage, updatePost);
 // DELETE POST

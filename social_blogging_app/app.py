@@ -50,6 +50,7 @@ class BlogRequest(BaseModel):
 def read_root():
     logger.info("Root endpoint accessed")
     return {"message": "Welcome to the Social Blogging API"}
+
 #  generate_blog function
 @app.post("/api/generate-blog")
 def generate_blog(request: BlogRequest):
@@ -80,6 +81,9 @@ def generate_blog(request: BlogRequest):
         else:
             raise ValueError(f"Unexpected crew result format: {type(result)}. The output is missing the 'raw' attribute.")
 
+        # DEBUG: Log the raw result
+        logger.info(f"Raw crew output: {raw_result_string}")
+
         # Cleaning and parse the JSON string from the raw attribute
         cleaned_result_string = raw_result_string.strip()
         # Remove any trailing markdown code block tags if they exist
@@ -88,38 +92,81 @@ def generate_blog(request: BlogRequest):
         if cleaned_result_string.endswith("```"):
             cleaned_result_string = cleaned_result_string.rsplit("```", 1)[0].strip()
 
+        # DEBUG: Log the cleaned result
+        logger.info(f"Cleaned result string: {cleaned_result_string}")
+
         parsed_result = json.loads(cleaned_result_string)
 
-        # Extracting the content, title, and metadata from the parsed result
-        # Checks for multiple possible keys for content, title, and meta_description
-        title = parsed_result.get("title", parsed_result.get("blogTitle", f"Blog Post: {request.topic}"))
-        blog_content = parsed_result.get("blog_summary", parsed_result.get("blogSummary", parsed_result.get("summary", "No content was generated.")))
-        meta_description = parsed_result.get("meta_description", parsed_result.get("metaDescription", f"A blog post about {request.topic}."))
+        # DEBUG: Log the parsed JSON structure
+        logger.info(f"Parsed JSON keys: {list(parsed_result.keys())}")
+        logger.info(f"Full parsed result: {json.dumps(parsed_result, indent=2)}")
 
-        # Extracted hashtags from social media posts or create a default list
-        social_media_posts = parsed_result.get("social_media_posts", {})
-        hashtags = []
-        if 'twitter' in social_media_posts:
-            # Simple extraction of hashtags from a social media post string
-            for word in social_media_posts['twitter'].split():
-                if word.startswith('#'):
-                    hashtags.append(word.strip('#'))
-        if not hashtags:
-            hashtags = [request.topic.lower().replace(' ', '')]
+        # Extract title - try multiple possible keys
+        title = (parsed_result.get("title") or 
+                parsed_result.get("blogTitle") or 
+                parsed_result.get("blog_title") or
+                f"Top {request.topic.title()} Insights and Trends")
         
-        # Preparing the final, well-structured output
+        # Get the main content - try multiple possible keys
+        blog_content = (parsed_result.get("summary") or 
+                       parsed_result.get("blog_summary") or 
+                       parsed_result.get("blogSummary") or 
+                       parsed_result.get("content") or
+                       "No content was generated.")
+        
+        # Get meta description
+        meta_description = (parsed_result.get("meta_description") or 
+                           parsed_result.get("metaDescription") or 
+                           parsed_result.get("meta_desc") or
+                           f"A comprehensive guide about {request.topic}.")
+        
+        # Extract social media posts
+        social_media_posts = parsed_result.get("social_media_posts", {})
+        
+        # DEBUG: Log social media posts
+        logger.info(f"Social media posts found: {social_media_posts}")
+        logger.info(f"Social media posts type: {type(social_media_posts)}")
+        
+        # Extract hashtags from all social media posts
+        hashtags = set()  # Using set to avoid duplicates
+        
+        if isinstance(social_media_posts, dict):
+            for platform, post in social_media_posts.items():
+                logger.info(f"Processing {platform}: {post}")
+                # Extract hashtags from each social media post
+                if isinstance(post, str):
+                    words = post.split()
+                    for word in words:
+                        if word.startswith('#'):
+                            hashtag = word.strip('#').strip('.,!?()').lower()
+                            if hashtag:  # Only add non-empty hashtags
+                                hashtags.add(hashtag)
+                                logger.info(f"Found hashtag: {hashtag}")
+        
+        # Convert set back to list and add fallback if no hashtags found
+        hashtags_list = list(hashtags) if hashtags else [request.topic.lower().replace(' ', '')]
+        
+        # DEBUG: Log final hashtags
+        logger.info(f"Final hashtags: {hashtags_list}")
+        
+        # Preparing the final, comprehensive output
         final_output = {
             "title": title,
             "content": blog_content,
             "meta_description": meta_description,
-            "hashtags": hashtags
+            "social_media_posts": social_media_posts,  
+            "hashtags": hashtags_list
         }
+
+        # DEBUG: Log final output
+        logger.info(f"Final output: {json.dumps(final_output, indent=2)}")
 
         logger.info(f"Blog generation successful - Title: '{title}'")
         return final_output
 
     except json.JSONDecodeError as e:
         logger.error(f"Failed to parse crew output as JSON: {e}")
+        logger.error(f"Raw string that failed to parse: {raw_result_string}")
         raise HTTPException(status_code=500, detail=f"An error occurred: The crew's output was not valid JSON.")
     except Exception as e:
         logger.error(f"Blog generation failed: {str(e)}")
